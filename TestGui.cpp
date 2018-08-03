@@ -21,6 +21,7 @@ void TestGui::SubMenu(Bar& bar) {
     
 void TestGui::StartCalc(){
 	//static int i=0;
+	ZeroOutOut();
 	//tab1.lbl1 = Format("You pressed 'Кнопка 1' %d times, Znachenie = %d",++i,~tab1.editfld1);
 	Vector <InputData> inDatVect;
 	Vector <Ephemeris> eph;
@@ -55,7 +56,6 @@ void TestGui::StartCalc(){
 	ephem[3][0] = tab1.editef30; ephem[3][1] = tab1.editef31; ephem[3][2] = tab1.editef32;	//5
 	ephem[4][0] = tab1.editef40; ephem[4][1] = tab1.editef41; ephem[4][2] = tab1.editef42;	//22
 	
-	tab1.krit1.WhenAction = [=] {
 	/*
 	double ephem[5][3];
 	ephem[0][0] = tab1.editef00; ephem[0][1] = tab1.editef10; ephem[0][2] = tab1.editef02;	//20-й аппарат
@@ -64,8 +64,6 @@ void TestGui::StartCalc(){
 	ephem[3][0] = tab1.editef30; ephem[3][1] = tab1.editef31; ephem[3][2] = tab1.editef32;	//5
 	ephem[4][0] = tab1.editef40; ephem[4][1] = tab1.editef41; ephem[4][2] = tab1.editef42;	//22
 	*/
-	tab1.accur1 = "Решение с использование матрицы Эфемерид";
-	};
 	
 //	inData[1][0] = pow((pow((xx - ephem[0][0]), 2) + pow((yy - ephem[0][1]), 2) + pow((zz - ephem[0][2]), 2)), 0.5);
 //	inData[1][1] = pow((pow((xx - ephem[1][0]), 2) + pow((yy - ephem[1][1]), 2) + pow((zz - ephem[1][2]), 2)), 0.5);
@@ -93,10 +91,16 @@ void TestGui::StartCalc(){
 	LOG("In the procedure");
 	//Найдём координаты станции
 	//Coord statPos = NavProblemPsRang(inDatVect, eph);
+	tab1.polosa.SetTotal(100);
 	tab1.polosa.Set(0);
 	Coord statPos = NewNavProb(inDatVect, eph);
 	tab1.polosa.Set(100);
-	
+	/*
+	RDUMP(statPos.x);
+	RDUMP(statPos.y);
+	RDUMP(statPos.z);
+	RDUMP(statPos.t);
+	*/
 	tab1.editoutX = statPos.x;
 	tab1.editoutY = statPos.y;
 	tab1.editoutZ = statPos.z;
@@ -110,6 +114,13 @@ void TestGui::StartCalc(){
 		tab1.accur = "Точность шикарная";
 	}
 	
+}
+void TestGui::ZeroOutOut(){
+	tab1.editoutX = 0;
+	tab1.editoutY = 0;
+	tab1.editoutZ = 0;
+	tab1.editoutT = 0;
+	tab1.editacc = 0;
 }
 void TestGui::ZeroOutIn(){
 	tab1.editin00 = 0;
@@ -217,14 +228,28 @@ void TestGui::TranslatIntoTop(){
 
 void TestGui::DisplayMap(){
 	// реализовано поверхсностно -  неточно
-	tab2.imagePoint.VSizePos(tab2.editLat*(-5.55)).HSizePos(tab2.editLon*5.52);
-	tab2.imagePoint.SetImage(TutorialImg::Point());
-	tab2.imagePoint.Enable(false);
-	}
-void TestGui::DisplayMapMove(){
-	tab2.imagePoint.Hide();
-	}
+
+	//tab2.imagePoint1.SetImage(TutorialImg::p1());
+	//tab2.imagePoint2.SetImage(TutorialImg::p2());
+	//tab2.imagePoint3.SetImage(TutorialImg::p3());
+	//tab2.imagePoint3.TopPosZ(292, 100).LeftPosZ(281, 200);
+	//tab2.imagePoint1.TopPosZ(292, 100).LeftPosZ(369, 200);
+	//tab2.imagePoint2.TopPosZ(387, 100).LeftPosZ(281, 200);
 	
+	tab2.imagePoint.SetImage(TutorialImg::p());
+	tab2.imagePoint.TopPosZ(292 - (tab2.editLat*95)/45, 100).LeftPosZ(281 + (tab2.editLon*88)/45 , 200);
+	tab2.imagePoint1.ClearFrames();
+	if ((54<tab2.editLat) && (tab2.editLat<57) && (36<tab2.editLon) && (tab2.editLon<38)){
+		tab2.imagePoint1.SetImage(TutorialImg::p_name_def());}
+	else{
+		tab2.imagePoint1.SetImage(TutorialImg::p_name());}
+	
+	tab2.imagePoint1.TopPosZ(292 - (tab2.editLat*95)/45 + 10, 100).LeftPosZ(281 + (tab2.editLon*88)/45 + 10 , 200);
+
+	tab2.imagePoint.Enable(false);
+	tab2.imagePoint1.Enable(false);
+	}
+
 void TestGui::SubstituteHeight(){
 	tab2.editH = 160.;
 	}
@@ -248,9 +273,14 @@ void TestGui::Tab1Screen(){
 	tab1.path2 <<= "/path/config";
 	tab1.path3 <<= "/path/main";
 	
-	tab1.opt1.WhenAction = [=] {
-		tab1.accur1 = "Решение производится с критерием 1 ";
-	};
+	tab1.opt1.WhenAction = [=] {tab1.accur1 = "Решение производится с критерием 1";};
+	tab1.opt2.WhenAction = [=] {tab1.accur1 = "Решение производится с критерием 2";};
+	tab1.opt3.WhenAction = [=] {tab1.accur1 = "Решение производится с критерием 3";};
+	tab1.opt4.WhenAction = [=] {tab1.accur1 = "Решение производится с критерием 4";};
+	tab1.opt5.WhenAction = [=] {tab1.accur1 = "Решение производится с критерием 5";};
+	tab1.opt6.WhenAction = [=] {tab1.accur1 = "Решение производится с критерием 6";};
+	tab1.krit1.WhenAction = [=] {tab1.accur1 = "Решение производится с матрицей Эфемерид";};
+	tab1.krit2.WhenAction = [=] {tab1.accur1 = "Решение производится с доп.условием 1";};
 }
 
 void TestGui::Tab2Screen(){
@@ -258,8 +288,10 @@ void TestGui::Tab2Screen(){
 	tab2.btn1.WhenPush = THISBACK(TranslatIntoGeo);
 	tab2.btn2.WhenPush = THISBACK(TranslatIntoTop);
 	tab2.btn3.WhenPush = THISBACK(DisplayMap);
-	tab2.btn6.WhenPush = THISBACK(DisplayMapMove);
 	tab2.btn4.WhenPush = THISBACK(SubstituteHeight);
 	tab2.btn5.WhenPush = THISBACK(DefaultGeo);
-	
 	}
+	
+void TestGui::Tab3Screen(){
+	
+}
