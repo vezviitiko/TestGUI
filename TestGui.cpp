@@ -14,6 +14,10 @@ void TestGui::ButtonMaps() {
     PromptOK("Page with map is not available");
     }
     
+void TestGui::ButtonPathRush() {
+    PromptOK("Solution is not possible because we are stupid");
+    }
+    
 void TestGui::SubMenu(Bar& bar) {
 		bar.Add("Exit", TutorialImg::Exit(), [=] { Exit(); });
 		bar.Add("Maps", TutorialImg::world_map(), [=] { ButtonMaps(); });
@@ -91,10 +95,8 @@ void TestGui::StartCalc(){
 	LOG("In the procedure");
 	//Найдём координаты станции
 	//Coord statPos = NavProblemPsRang(inDatVect, eph);
-	tab1.polosa.SetTotal(100);
-	tab1.polosa.Set(0);
+	
 	Coord statPos = NewNavProb(inDatVect, eph);
-	tab1.polosa.Set(100);
 	/*
 	RDUMP(statPos.x);
 	RDUMP(statPos.y);
@@ -268,19 +270,61 @@ void TestGui::Tab1Screen(){
 	tab1.btnZeroIn.WhenPush = THISBACK(ZeroOutIn);
 	tab1.btnZeroEf.WhenPush = THISBACK(ZeroOutEf);
 	tab1.btnCopy.WhenPush = THISBACK(CopyOut);
+	tab1.btnResh2.WhenPush = THISBACK(ButtonPathRush);
 	//tab1.btn2.WhenPush = [=] { tab1.editfld1 <<= 10;};
-	tab1.path1 <<= "/path";
-	tab1.path2 <<= "/path/config";
-	tab1.path3 <<= "/path/main";
 	
-	tab1.opt1.WhenAction = [=] {tab1.accur1 = "Решение производится с критерием 1";};
-	tab1.opt2.WhenAction = [=] {tab1.accur1 = "Решение производится с критерием 2";};
-	tab1.opt3.WhenAction = [=] {tab1.accur1 = "Решение производится с критерием 3";};
-	tab1.opt4.WhenAction = [=] {tab1.accur1 = "Решение производится с критерием 4";};
-	tab1.opt5.WhenAction = [=] {tab1.accur1 = "Решение производится с критерием 5";};
-	tab1.opt6.WhenAction = [=] {tab1.accur1 = "Решение производится с критерием 6";};
-	tab1.krit1.WhenAction = [=] {tab1.accur1 = "Решение производится с матрицей Эфемерид";};
-	tab1.krit2.WhenAction = [=] {tab1.accur1 = "Решение производится с доп.условием 1";};
+	
+	tab1.opt1.WhenAction = [=] {
+		if (~tab1.opt1 == true)
+			{tab1.accur1 = "Решение производится с критерием 1";}
+		else
+			{tab1.accur1 = "";}
+	};
+	tab1.opt2.WhenAction = [=] {if (~tab1.opt2 == true)
+			{tab1.accur1 = "Решение производится с критерием 2";}
+		else
+			{tab1.accur1 = "";}
+	};
+	tab1.opt3.WhenAction = [=] {if (~tab1.opt3 == true)
+			{tab1.accur1 = "Решение производится с критерием 3";}
+		else
+			{tab1.accur1 = "";}
+	};
+	tab1.opt4.WhenAction = [=] {if (~tab1.opt4 == true)
+			{tab1.accur1 = "Решение производится с критерием 4";}
+		else
+			{tab1.accur1 = "";}
+	};
+	tab1.opt5.WhenAction = [=] {if (~tab1.opt5 == true)
+			{tab1.accur1 = "Решение производится с критерием 5";}
+		else
+			{tab1.accur1 = "";}
+	};
+	tab1.opt6.WhenAction = [=] {if (~tab1.opt6 == true)
+			{tab1.accur1 = "Решение производится с критерием 6";}
+		else
+			{tab1.accur1 = "";}
+	};
+	tab1.opt7.WhenAction = [=] {if (~tab1.opt7 == true)
+			{tab1.accur1 = "Решение производится с критерием 7";}
+		else
+			{tab1.accur1 = "";}
+	};
+	tab1.krit1.WhenAction = [=] {if (~tab1.krit1 == true)
+			{tab1.accur1 = "Решение производится с матрицей Эфемерид";}
+		else
+			{tab1.accur1 = "";}
+	};
+	tab1.krit2.WhenAction = [=] {if (~tab1.krit2 == true)
+			{tab1.accur1 = "Решение производится с доп.условием 2";}
+		else
+			{tab1.accur1 = "";}
+	};
+	tab1.krit3.WhenAction = [=] {if (~tab1.krit3 == true)
+			{tab1.accur1 = "Решение производится с доп.условием 3";}
+		else
+			{tab1.accur1 = "";}
+	};
 }
 
 void TestGui::Tab2Screen(){
@@ -293,5 +337,7 @@ void TestGui::Tab2Screen(){
 	}
 	
 void TestGui::Tab3Screen(){
-	
+	tab3.path1 <<= "/path";
+	tab3.path2 <<= "/path/config";
+	tab3.path3 <<= "/path/main";
 }
