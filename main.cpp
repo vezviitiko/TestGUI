@@ -13,6 +13,8 @@ TestGui::TestGui()
 	Tab1Screen();
 	// -- лист 2 - tab2
 	Tab2Screen();
+	// -- лист 3 - tab3
+	Tab3Screen();
 	
     dlg.Run();
 }
@@ -22,4 +24,5 @@ GUI_APP_MAIN
 	LOG("START");
 	TestGui();
 	LOG("END");
+	
 }
