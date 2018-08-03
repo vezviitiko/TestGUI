@@ -24,6 +24,7 @@ public:
 	WithTab1Layout<ParentCtrl> tab1;
 	void Tab1Screen();
 	void StartCalc();
+	void ZeroOutOut();
 	void ZeroOutIn();
 	void ZeroOutEf();
 	void DefaultIn();
@@ -34,11 +35,10 @@ public:
 	void TranslatIntoGeo();
 	void TranslatIntoTop();
 	void DisplayMap();
-	void DisplayMapMove();
 	void DefaultGeo();
 	void SubstituteHeight();
 	WithTab3Layout<ParentCtrl> tab3;
-	
+	void Tab3Screen();
 	
 
 };
