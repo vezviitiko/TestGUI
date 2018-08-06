@@ -195,7 +195,6 @@ void TestGui::CopyOut(){
 	tab2.editX = x;
 	tab2.editY = y;
 	tab2.editZ = z;
-	
 	tab1.komment = "Данные скопированы на следующую страницу";
 }
 	
@@ -270,12 +269,12 @@ void TestGui::Tab1Screen(){
 	tab1.btnZeroIn.WhenPush = THISBACK(ZeroOutIn);
 	tab1.btnZeroEf.WhenPush = THISBACK(ZeroOutEf);
 	tab1.btnCopy.WhenPush = THISBACK(CopyOut);
+	tab1.btnCopydub.WhenPush = THISBACK(CopyOut);
 	tab1.btnResh2.WhenPush = THISBACK(ButtonPathRush);
 	//tab1.btn2.WhenPush = [=] { tab1.editfld1 <<= 10;};
 	
 	
-	tab1.opt1.WhenAction = [=] {
-		if (~tab1.opt1 == true)
+	tab1.opt1.WhenAction = [=] {if (~tab1.opt1 == true)
 			{tab1.accur1 = "Решение производится с критерием 1";}
 		else
 			{tab1.accur1 = "";}
@@ -316,7 +315,7 @@ void TestGui::Tab1Screen(){
 			{tab1.accur1 = "";}
 	};
 	tab1.krit2.WhenAction = [=] {if (~tab1.krit2 == true)
-			{tab1.accur1 = "Решение производится с доп.условием 2";}
+			{tab1.accur1 = "Решение производится с решение альманаха";}
 		else
 			{tab1.accur1 = "";}
 	};
