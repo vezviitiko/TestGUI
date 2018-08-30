@@ -5,11 +5,12 @@
 
 using namespace Upp;
 
+#define IMAGECLASS TutorialImg
+#define IMAGEFILE <TestGui/images.iml>
+#include <Draw/iml_header.h>
+
 #define LAYOUTFILE <TestGui/TabDlg.lay>
 #include <CtrlCore/lay.h>
-
-#include <kamaz/kamaz.h>
-#include <MNK/NavSolJps2.h>
 
 class TestGui : public TopWindow {
 public:
@@ -17,30 +18,29 @@ public:
 	TestGui();
 	MenuBar menu;
 	TabDlg dlg;
-	void Exit();
-	void ButtonMaps();
-	void SubMenu(Bar& bar);
-	
-	WithTab1Layout<ParentCtrl> tab1;
-	void Tab1Screen();
-	void StartCalc();
-	void ZeroOutOut();
-	void ZeroOutIn();
-	void ZeroOutEf();
-	void DefaultIn();
-	void DefaultEf();
-	void CopyOut();
-	WithTab2Layout<ParentCtrl> tab2;
-	void Tab2Screen();
-	void TranslatIntoGeo();
-	void TranslatIntoTop();
-	void DisplayMap();
-	void DefaultGeo();
-	void SubstituteHeight();
-	WithTab3Layout<ParentCtrl> tab3;
-	void Tab3Screen();
-	
-
+	bool butstop;
+	int colpoint;
+	WithTabMainLayout<ParentCtrl> tabMain;
+	void TabMainScreen();
+	void ButStart();
+	void ButStop();
+	void ZeroTarget();
+	void ButZeropop();
+	WithTabPathLayout<ParentCtrl> tabPath;
+	void TabPathScreen();
+	void OverWritePathIni();
+	WithTabManLayout<ParentCtrl> tabMan;
+	void TabManScreen();
 };
+
+struct PathIni
+{
+	public:
+	PathIni(){}
+		String pathSP3;
+		String pathJPS;
+};
+
+PathIni ParsePath(String FileName);
 
 #endif
