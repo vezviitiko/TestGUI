@@ -2,20 +2,18 @@
 
 TestGui::TestGui()
 {
-	dlg(tab1, "Main")(tab2, "Maps")(tab3, "Time")
+	dlg(tabMain, "Главная")(tabPath, "Пути")(tabMan, "Руководство");
+	
+	//dlg(tab1, "OLD_Main")(tab2, "Maps")(tab3, "Path")(tabMain, "Main")
+	/*dlg(tabMain, "Main")
 	   .Title("Kamaz-Migo Interface")
 	   .AddFrame(menu);
 	menu.Set([=](Bar& bar) {
 		bar.Sub("Menu", [=](Bar& bar) { SubMenu(bar); });
-	});
-	
-	// -- лист 1 - tab1
-	Tab1Screen();
-	// -- лист 2 - tab2
-	Tab2Screen();
-	// -- лист 3 - tab3
-	Tab3Screen();
-	
+	});*/
+	TabMainScreen();
+	TabPathScreen();
+	TabManScreen();
     dlg.Run();
 }
 
@@ -24,5 +22,4 @@ GUI_APP_MAIN
 	LOG("START");
 	TestGui();
 	LOG("END");
-	
 }
