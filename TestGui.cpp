@@ -2,341 +2,100 @@
 
 #define IMAGECLASS TutorialImg
 #define IMAGEFILE <TestGui/images.iml>
-#include <Draw/iml.h>
+#include <Draw/iml_source.h>
 
-void TestGui::Exit() {
-    if(PromptOKCancel("Exit MyApp?"))
-        dlg.Close();
-		//Break();
-    }
-    
-void TestGui::ButtonMaps() {
-    PromptOK("Page with map is not available");
-    }
-    
-void TestGui::ButtonPathRush() {
-    PromptOK("Solution is not possible because we are stupid");
-    }
-    
-void TestGui::SubMenu(Bar& bar) {
-		bar.Add("Exit", TutorialImg::Exit(), [=] { Exit(); });
-		bar.Add("Maps", TutorialImg::world_map(), [=] { ButtonMaps(); });
-    }
-    
-void TestGui::StartCalc(){
-	//static int i=0;
-	ZeroOutOut();
-	//tab1.lbl1 = Format("You pressed 'Кнопка 1' %d times, Znachenie = %d",++i,~tab1.editfld1);
-	Vector <InputData> inDatVect;
-	Vector <Ephemeris> eph;
+void TestGui::TabMainScreen(){
+	tabMain.image_target.SetImage(TutorialImg::target2());
+	tabMain.image_logo.SetImage(TutorialImg::logo_iaz());
+	tabMain.imageeguat_osn.SetImage(TutorialImg::imageeguat_osn());
 	
-	//Зададим массив входящих данных
-	double inData[2][7];
-	inData[0][0] = tab1.editin00;
-	inData[0][1] = tab1.editin01;
-	inData[0][2] = tab1.editin02;
-	inData[0][3] = tab1.editin03;
-	inData[0][4] = tab1.editin04;
-/*	
-	inData[1][0] = 20317.7206562;
-	inData[1][1] = 22309.8467601915;
-	inData[1][2] = 19305.7438067749;
-	inData[1][3] = 19344.8207480251;
-	inData[1][4] = 23093.3796233308;
-
-
-	//Попробуем использовать модельные измерения
-	double xx = -3782627.48060055 / 1000.;
-	double yy = 706759.897227085 / 1000.;
-	double zz = 6330779.72431116 / 1000.;
-*/
-	//Эфемериды аппаратов
-
-	double ephem[5][3];
+	ZeroTarget();
 	
-	ephem[0][0] = tab1.editef00; ephem[0][1] = tab1.editef10; ephem[0][2] = tab1.editef02;	//20-й аппарат
-	ephem[1][0] = tab1.editef10; ephem[1][1] = tab1.editef11; ephem[1][2] = tab1.editef12;	//4-й аппарат
-	ephem[2][0] = tab1.editef20; ephem[2][1] = tab1.editef21; ephem[2][2] = tab1.editef22;	//21
-	ephem[3][0] = tab1.editef30; ephem[3][1] = tab1.editef31; ephem[3][2] = tab1.editef32;	//5
-	ephem[4][0] = tab1.editef40; ephem[4][1] = tab1.editef41; ephem[4][2] = tab1.editef42;	//22
+	tabMain.imageeguat_ion.SetImage(TutorialImg::imageeguat_ion_np());
+	tabMain.imageeguat_trop.SetImage(TutorialImg::imageeguat_trop_np());
+	tabMain.imageeguat_zsap.SetImage(TutorialImg::imageeguat_zsap_np());
+	tabMain.imageeguat_zsas.SetImage(TutorialImg::imageeguat_zsas_np());
+	tabMain.imageeguat_vm.SetImage(TutorialImg::imageeguat_vm_np());
+	tabMain.imageeguat_shum.SetImage(TutorialImg::imageeguat_shum_np());
 	
-	/*
-	double ephem[5][3];
-	ephem[0][0] = tab1.editef00; ephem[0][1] = tab1.editef10; ephem[0][2] = tab1.editef02;	//20-й аппарат
-	ephem[1][0] = tab1.editef10; ephem[1][1] = tab1.editef11; ephem[1][2] = tab1.editef12;	//4-й аппарат
-	ephem[2][0] = tab1.editef20; ephem[2][1] = tab1.editef21; ephem[2][2] = tab1.editef22;	//21
-	ephem[3][0] = tab1.editef30; ephem[3][1] = tab1.editef31; ephem[3][2] = tab1.editef32;	//5
-	ephem[4][0] = tab1.editef40; ephem[4][1] = tab1.editef41; ephem[4][2] = tab1.editef42;	//22
-	*/
+	tabMain.btnZero.WhenPush = THISBACK(ZeroTarget);
+	tabMain.btnStop.WhenPush = THISBACK(ButStop);
+	tabMain.btnZeropop.WhenPush = THISBACK(ButZeropop);
 	
-//	inData[1][0] = pow((pow((xx - ephem[0][0]), 2) + pow((yy - ephem[0][1]), 2) + pow((zz - ephem[0][2]), 2)), 0.5);
-//	inData[1][1] = pow((pow((xx - ephem[1][0]), 2) + pow((yy - ephem[1][1]), 2) + pow((zz - ephem[1][2]), 2)), 0.5);
-//	inData[1][2] = pow((pow((xx - ephem[2][0]), 2) + pow((yy - ephem[2][1]), 2) + pow((zz - ephem[2][2]), 2)), 0.5);
-//	inData[1][3] = pow((pow((xx - ephem[3][0]), 2) + pow((yy - ephem[3][1]), 2) + pow((zz - ephem[3][2]), 2)), 0.5);
-//	inData[1][4] = pow((pow((xx - ephem[4][0]), 2) + pow((yy - ephem[4][1]), 2) + pow((zz - ephem[4][2]), 2)), 0.5);
-
-	inData[1][0] = tab1.editin10;
-	inData[1][1] = tab1.editin11;
-	inData[1][2] = tab1.editin12;
-	inData[1][3] = tab1.editin13;
-	inData[1][4] = tab1.editin14;
-	
-	//Заполним массивы входящих данных
-	for (int i = 0; i < 5; i++){
-		inDatVect.Add(InputData(inData[0][i], inData[1][i], 0.0));
-		eph.Add(Ephemeris(0, ephem[i][0], ephem[i][1], ephem[i][2]));
-	}
-	
-	LOG("Data test output");
-	for (int i = 0; i < inDatVect.GetCount(); i++){
-		RDUMP(inDatVect[i].psRangLen);
-	}
-	
-	LOG("In the procedure");
-	//Найдём координаты станции
-	//Coord statPos = NavProblemPsRang(inDatVect, eph);
-	
-	Coord statPos = NewNavProb(inDatVect, eph);
-	/*
-	RDUMP(statPos.x);
-	RDUMP(statPos.y);
-	RDUMP(statPos.z);
-	RDUMP(statPos.t);
-	*/
-	tab1.editoutX = statPos.x;
-	tab1.editoutY = statPos.y;
-	tab1.editoutZ = statPos.z;
-	tab1.editoutT = statPos.t;
-	tab1.editacc = statPos.acc;
-	
-	if (abs(tab1.editacc - 6371.) > 100.){
-		tab1.accur = "Точность ужасная";
-	}
-	else{
-		tab1.accur = "Точность шикарная";
-	}
-	
-}
-void TestGui::ZeroOutOut(){
-	tab1.editoutX = 0;
-	tab1.editoutY = 0;
-	tab1.editoutZ = 0;
-	tab1.editoutT = 0;
-	tab1.editacc = 0;
-}
-void TestGui::ZeroOutIn(){
-	tab1.editin00 = 0;
-	tab1.editin01 = 0;
-	tab1.editin02 = 0;
-	tab1.editin03 = 0;
-	tab1.editin04 = 0;
-	tab1.editin10 = 0;
-	tab1.editin11 = 0;
-	tab1.editin12 = 0;
-	tab1.editin13 = 0;
-	tab1.editin14 = 0;
-	}
-	
-void TestGui::ZeroOutEf(){
-	tab1.editef00 = 0;
-	tab1.editef01 = 0;
-	tab1.editef02 = 0;
-	tab1.editef10 = 0;
-	tab1.editef11 = 0;
-	tab1.editef12 = 0;
-	tab1.editef20 = 0;
-	tab1.editef21 = 0;
-	tab1.editef22 = 0;
-	tab1.editef30 = 0;
-	tab1.editef31 = 0;
-	tab1.editef32 = 0;
-	tab1.editef40 = 0;
-	tab1.editef41 = 0;
-	tab1.editef42 = 0;
-	}
-	
-void TestGui::DefaultIn(){
-	// значения по умолчанию
-	tab1.editin00 = 20;
-	tab1.editin01 = 4;
-	tab1.editin02 = 21;
-	tab1.editin03 = 5;
-	tab1.editin04 = 22;
-	tab1.editin10 = 20317.7206562;
-	tab1.editin11 = 22309.8467601915;
-	tab1.editin12 = 19305.7438067749;
-	tab1.editin13 = 19344.8207480251;
-	tab1.editin14 = 19344.8207480251;
-	}
-	
-void TestGui::DefaultEf(){
-	// значения по умолчанию
-	tab1.editef00 = 8852.877527;
-	tab1.editef01 = 19812.499427;
-	tab1.editef02 = 13455.272608;
-	tab1.editef10 = -12198.743176;
-	tab1.editef11 = 6387.390091;
-	tab1.editef12 = 21491.421479;
-	tab1.editef20 = 10976.098464;
-	tab1.editef21 = 2307.666364;
-	tab1.editef22 = 22904.680281;
-	tab1.editef30 = 5644.592226;
-	tab1.editef31 = 12957.107325;
-	tab1.editef32 = 21231.360978;
-	tab1.editef40 = 5752.717420;
-	tab1.editef41 = -16816.611187;
-	tab1.editef42 = 18235.134882;
-	}
-
-void TestGui::CopyOut(){
-	double x = tab1.editoutX;
-	double y = tab1.editoutY;
-	double z = tab1.editoutZ;
-	tab2.editX = x;
-	tab2.editY = y;
-	tab2.editZ = z;
-	tab1.komment = "Данные скопированы на следующую страницу";
-}
-	
-void TestGui::TranslatIntoGeo(){
-	CCartesian car;
-	CSpherical sph;
-	
-	car.x = tab2.editX;
-	car.y = tab2.editY;
-	car.z = tab2.editZ;
-	
-	sph = DecToSphCoord(car);
-	
-	tab2.editLat = sph.lat;
-	tab2.editLon = sph.lon;
-	tab2.editH = sph.hgt;
-	}
-
-void TestGui::TranslatIntoTop(){
-	CCartesian car;
-	
-	double lat = tab2.editLat;
-	double lon = tab2.editLon;
-	double hgt = tab2.editH;
-	
-	car = SphCoordToDec(CSpherical(lat, lon , hgt));
-	
-	tab2.editX = car.x;
-	tab2.editY = car.y;
-	tab2.editZ = car.z;
-	}
-
-void TestGui::DisplayMap(){
-	// реализовано поверхсностно -  неточно
-
-	//tab2.imagePoint1.SetImage(TutorialImg::p1());
-	//tab2.imagePoint2.SetImage(TutorialImg::p2());
-	//tab2.imagePoint3.SetImage(TutorialImg::p3());
-	//tab2.imagePoint3.TopPosZ(292, 100).LeftPosZ(281, 200);
-	//tab2.imagePoint1.TopPosZ(292, 100).LeftPosZ(369, 200);
-	//tab2.imagePoint2.TopPosZ(387, 100).LeftPosZ(281, 200);
-	
-	tab2.imagePoint.SetImage(TutorialImg::p());
-	tab2.imagePoint.TopPosZ(292 - (tab2.editLat*95)/45, 100).LeftPosZ(281 + (tab2.editLon*88)/45 , 200);
-	tab2.imagePoint1.ClearFrames();
-	if ((54<tab2.editLat) && (tab2.editLat<57) && (36<tab2.editLon) && (tab2.editLon<38)){
-		tab2.imagePoint1.SetImage(TutorialImg::p_name_def());}
-	else{
-		tab2.imagePoint1.SetImage(TutorialImg::p_name());}
-	
-	tab2.imagePoint1.TopPosZ(292 - (tab2.editLat*95)/45 + 10, 100).LeftPosZ(281 + (tab2.editLon*88)/45 + 10 , 200);
-
-	tab2.imagePoint.Enable(false);
-	tab2.imagePoint1.Enable(false);
-	}
-
-void TestGui::SubstituteHeight(){
-	tab2.editH = 160.;
-	}
-
-void TestGui::DefaultGeo(){
-	// значения по умолчанию
-	tab2.editLat = 55.9121311;
-	tab2.editLon = 37.8090947;
-	tab2.editH = 160.;
-	}
-
-void TestGui::Tab1Screen(){
-	tab1.btnResh.WhenPush = THISBACK(StartCalc);
-	tab1.btn1.WhenPush = THISBACK(DefaultIn);
-	tab1.btn2.WhenPush = THISBACK(DefaultEf);
-	tab1.btnZeroIn.WhenPush = THISBACK(ZeroOutIn);
-	tab1.btnZeroEf.WhenPush = THISBACK(ZeroOutEf);
-	tab1.btnCopy.WhenPush = THISBACK(CopyOut);
-	tab1.btnCopydub.WhenPush = THISBACK(CopyOut);
-	tab1.btnResh2.WhenPush = THISBACK(ButtonPathRush);
-	//tab1.btn2.WhenPush = [=] { tab1.editfld1 <<= 10;};
-	
-	
-	tab1.opt1.WhenAction = [=] {if (~tab1.opt1 == true)
-			{tab1.accur1 = "Решение производится с критерием 1";}
-		else
-			{tab1.accur1 = "";}
+	this->butstop = false;
+	colpoint = 1;
+	tabMain.btnStart.WhenAction = [=] {
+		this->butstop = false;
+		KillTimeCallback(); // удаление предыдущего запуска если он есть
+		SetTimeCallback(-200, tabMain.btnStart.WhenPush = THISBACK(ButStart));
 	};
-	tab1.opt2.WhenAction = [=] {if (~tab1.opt2 == true)
-			{tab1.accur1 = "Решение производится с критерием 2";}
-		else
-			{tab1.accur1 = "";}
+	
+	tabMain.imageeguat_dop1.SetImage(TutorialImg::imageeguat_ion0());
+	tabMain.imageeguat_dop2.SetImage(TutorialImg::imageeguat_trop0());
+	tabMain.imageeguat_dop3.SetImage(TutorialImg::imageeguat_zsap0());
+	tabMain.imageeguat_dop4.SetImage(TutorialImg::imageeguat_zsas0());
+	tabMain.imageeguat_dop5.SetImage(TutorialImg::imageeguat_vm0());
+	tabMain.imageeguat_dop6.SetImage(TutorialImg::imageeguat_shum0());
+	
+	tabMain.opt1.WhenAction = [=] {
+		if (~tabMain.opt1 == true) {
+			tabMain.imageeguat_dop1.SetImage(TutorialImg::imageeguat_ion());
+		}
+		else{
+			tabMain.imageeguat_dop1.SetImage(TutorialImg::imageeguat_ion0());
+		}
 	};
-	tab1.opt3.WhenAction = [=] {if (~tab1.opt3 == true)
-			{tab1.accur1 = "Решение производится с критерием 3";}
-		else
-			{tab1.accur1 = "";}
+	tabMain.opt2.WhenAction = [=] {
+		if (~tabMain.opt2 == true) {
+			tabMain.imageeguat_dop2.SetImage(TutorialImg::imageeguat_trop());
+		}
+		else{
+			tabMain.imageeguat_dop2.SetImage(TutorialImg::imageeguat_trop0());
+		}
 	};
-	tab1.opt4.WhenAction = [=] {if (~tab1.opt4 == true)
-			{tab1.accur1 = "Решение производится с критерием 4";}
-		else
-			{tab1.accur1 = "";}
+	tabMain.opt3.WhenAction = [=] {
+		if (~tabMain.opt3 == true) {
+			tabMain.imageeguat_dop3.SetImage(TutorialImg::imageeguat_zsap());
+		}
+		else{
+			tabMain.imageeguat_dop3.SetImage(TutorialImg::imageeguat_zsap0());
+		}
 	};
-	tab1.opt5.WhenAction = [=] {if (~tab1.opt5 == true)
-			{tab1.accur1 = "Решение производится с критерием 5";}
-		else
-			{tab1.accur1 = "";}
+	tabMain.opt4.WhenAction = [=] {
+		if (~tabMain.opt4 == true) {
+			tabMain.imageeguat_dop4.SetImage(TutorialImg::imageeguat_zsas());
+		}
+		else{
+			tabMain.imageeguat_dop4.SetImage(TutorialImg::imageeguat_zsas0());
+		}
 	};
-	tab1.opt6.WhenAction = [=] {if (~tab1.opt6 == true)
-			{tab1.accur1 = "Решение производится с критерием 6";}
-		else
-			{tab1.accur1 = "";}
+	tabMain.opt5.WhenAction = [=] {
+		if (~tabMain.opt5 == true) {
+			tabMain.imageeguat_dop5.SetImage(TutorialImg::imageeguat_vm());
+		}
+		else{
+			tabMain.imageeguat_dop5.SetImage(TutorialImg::imageeguat_vm0());
+		}
 	};
-	tab1.opt7.WhenAction = [=] {if (~tab1.opt7 == true)
-			{tab1.accur1 = "Решение производится с критерием 7";}
-		else
-			{tab1.accur1 = "";}
-	};
-	tab1.krit1.WhenAction = [=] {if (~tab1.krit1 == true)
-			{tab1.accur1 = "Решение производится с матрицей Эфемерид";}
-		else
-			{tab1.accur1 = "";}
-	};
-	tab1.krit2.WhenAction = [=] {if (~tab1.krit2 == true)
-			{tab1.accur1 = "Решение производится с решение альманаха";}
-		else
-			{tab1.accur1 = "";}
-	};
-	tab1.krit3.WhenAction = [=] {if (~tab1.krit3 == true)
-			{tab1.accur1 = "Решение производится с доп.условием 3";}
-		else
-			{tab1.accur1 = "";}
+	tabMain.opt6.WhenAction = [=] {
+		if (~tabMain.opt6 == true) {
+			tabMain.imageeguat_dop6.SetImage(TutorialImg::imageeguat_shum());
+		}
+		else{
+			tabMain.imageeguat_dop6.SetImage(TutorialImg::imageeguat_shum0());
+		}
 	};
 }
 
-void TestGui::Tab2Screen(){
-	tab2.image_map.SetImage(TutorialImg::map_base());
-	tab2.btn1.WhenPush = THISBACK(TranslatIntoGeo);
-	tab2.btn2.WhenPush = THISBACK(TranslatIntoTop);
-	tab2.btn3.WhenPush = THISBACK(DisplayMap);
-	tab2.btn4.WhenPush = THISBACK(SubstituteHeight);
-	tab2.btn5.WhenPush = THISBACK(DefaultGeo);
-	}
-	
-void TestGui::Tab3Screen(){
-	tab3.path1 <<= "/path";
-	tab3.path2 <<= "/path/config";
-	tab3.path3 <<= "/path/main";
+void TestGui::TabPathScreen(){
+	// файл с путями
+	PathIni Pathini_ob;
+	Pathini_ob = ParsePath("Path.ini");
+	tabPath.pathSP3 <<= Pathini_ob.pathSP3;
+	tabPath.pathJPS <<= Pathini_ob.pathJPS;
+	tabPath.btnOverWrite.WhenPush = THISBACK(OverWritePathIni);
+}
+void TestGui::TabManScreen(){
+	tabMan.image_logo.SetImage(TutorialImg::logo_obsh());
+
 }
