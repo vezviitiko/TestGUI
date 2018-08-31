@@ -2,7 +2,11 @@
 
 TestGui::TestGui()
 {
-	dlg(tabMain, "Главная")(tabPath, "Пути")(tabMan, "Руководство");
+	
+	Pointf p(37.8090947, 55.9121311);
+	//(MapDlg(p), "Карта")
+	tabMap.Set(p);
+	dlg(tabMain, "Главная")(tabMap, "Карта")(tabPath, "Пути")(tabMan, "Руководство");
 	
 	//dlg(tab1, "OLD_Main")(tab2, "Maps")(tab3, "Path")(tabMain, "Main")
 	/*dlg(tabMain, "Main")
