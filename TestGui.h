@@ -12,6 +12,8 @@ using namespace Upp;
 #define LAYOUTFILE <TestGui/TabDlg.lay>
 #include <CtrlCore/lay.h>
 
+#include "MapDlg.h"
+
 class TestGui : public TopWindow {
 public:
 	typedef TestGui CLASSNAME;
@@ -29,6 +31,9 @@ public:
 	WithTabPathLayout<ParentCtrl> tabPath;
 	void TabPathScreen();
 	void OverWritePathIni();
+	
+	MapDlgDlg tabMap;
+	
 	WithTabManLayout<ParentCtrl> tabMan;
 	void TabManScreen();
 };
