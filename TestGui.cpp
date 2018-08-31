@@ -6,7 +6,8 @@
 
 void TestGui::TabMainScreen(){
 	tabMain.image_target.SetImage(TutorialImg::target2());
-	tabMain.image_logo.SetImage(TutorialImg::logo_iaz());
+	tabMain.imageshag.SetImage(TutorialImg::shag());
+	//tabMain.image_logo.SetImage(TutorialImg::logo_iaz());
 	tabMain.imageeguat_osn.SetImage(TutorialImg::imageeguat_osn());
 	
 	ZeroTarget();
@@ -88,7 +89,6 @@ void TestGui::TabMainScreen(){
 }
 
 void TestGui::TabPathScreen(){
-	// файл с путями
 	PathIni Pathini_ob;
 	Pathini_ob = ParsePath("Path.ini");
 	tabPath.pathSP3 <<= Pathini_ob.pathSP3;
@@ -97,5 +97,4 @@ void TestGui::TabPathScreen(){
 }
 void TestGui::TabManScreen(){
 	tabMan.image_logo.SetImage(TutorialImg::logo_obsh());
-
 }
